@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake Game</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <style>
+      body {
+        font-family: 'Open Sans', sans-serif;
+        background: linear-gradient(135deg, #552583, #FDB927);
+        margin: 0;
+        padding-top: 80px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+      }
+      h1 {
+        color: #FDB927;
+        text-shadow: 1px 1px 2px #552583;
+      }
+      canvas {
+        background: #000;
+        border: 2px solid #FDB927;
+      }
+      nav {
+        background-color: #552583;
+        border-bottom: 2px solid #FDB927;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+      .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10px 20px;
+      }
+      .navbar-container a {
+        text-decoration: none;
+        color: #FDB927;
+        font-weight: bold;
+        padding: 10px;
+        transition: 0.3s;
+      }
+      .navbar-container a:hover {
+        color: #fff;
+      }
+      .navbar-links {
+        display: flex;
+        gap: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="navbar-container">
+        <a href="index.html">Resume</a>
+        <div class="navbar-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">Game</a>
+          <a href="contact.html">Scratch Page</a>
+        </div>
+      </div>
+    </nav>
+
+    <h1>Snake Game</h1>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+    <script>
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
+
+      const grid = 20;
+      let count = 0;
+      let snake = {
+        x: 160,
+        y: 160,
+        dx: grid,
+        dy: 0,
+        cells: [],
+        maxCells: 4
+      };
+      let apple = {
+        x: 320,
+        y: 320
+      };
+
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+      }
+
+      function gameLoop() {
+        requestAnimationFrame(gameLoop);
+
+        if (++count < 4) return;
+        count = 0;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        snake.x += snake.dx;
+        snake.y += snake.dy;
+
+        if (snake.x < 0) snake.x = canvas.width - grid;
+        else if (snake.x >= canvas.width) snake.x = 0;
+
+        if (snake.y < 0) snake.y = canvas.height - grid;
+        else if (snake.y >= canvas.height) snake.y = 0;
+
+        snake.cells.unshift({ x: snake.x, y: snake.y });
+
+        if (snake.cells.length > snake.maxCells) {
+          snake.cells.pop();
+        }
+
+        ctx.fillStyle = "#FDB927";
+        ctx.fillRect(apple.x, apple.y, grid - 1, grid - 1);
+
+        ctx.fillStyle = "#fff";
+        snake.cells.forEach((cell, index) => {
+          ctx.fillRect(cell.x, cell.y, grid - 1, grid - 1);
+
+          if (cell.x === apple.x && cell.y === apple.y) {
+            snake.maxCells++;
+            apple.x = getRandomInt(0, 20) * grid;
+            apple.y = getRandomInt(0, 20) * grid;
+          }
+
+          for (let i = index + 1; i < snake.cells.length; i++) {
+            if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+              snake.x = 160;
+              snake.y = 160;
+              snake.cells = [];
+              snake.maxCells = 4;
+              snake.dx = grid;
+              snake.dy = 0;
+              apple.x = getRandomInt(0, 20) * grid;
+              apple.y = getRandomInt(0, 20) * grid;
+            }
+          }
+        });
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.which === 37 && snake.dx === 0) {
+          snake.dx = -grid;
+          snake.dy = 0;
+        } else if (e.which === 38 && snake.dy === 0) {
+          snake.dy = -grid;
+          snake.dx = 0;
+        } else if (e.which === 39 && snake.dx === 0) {
+          snake.dx = grid;
+          snake.dy = 0;
+        } else if (e.which === 40 && snake.dy === 0) {
+          snake.dy = grid;
+          snake.dx = 0;
+        }
+      });
+
+      requestAnimationFrame(gameLoop);
+    </script>
+  </body>
+</html>

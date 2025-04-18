@@ -1,0 +1,96 @@
+/* style.css */
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    margin: 0;
+    padding-top: 80px;
+    color: #fff;
+  }
+  
+  nav {
+    background: #111;
+    border-bottom: 2px solid #00ffe7;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+  }
+  
+  .navbar-container a {
+    text-decoration: none;
+    color: #00ffe7;
+    font-weight: bold;
+    padding: 10px;
+    transition: 0.3s;
+  }
+  
+  .navbar-container a:hover {
+    color: #fff;
+    text-shadow: 0 0 10px #00ffe7;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .riddle-box {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 255, 231, 0.2);
+    max-width: 600px;
+    margin: 60px auto;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 231, 0.3);
+  }
+  
+  h1 {
+    color: #00ffe7;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .riddle {
+    font-size: 1.3rem;
+    color: #eee;
+    margin: 20px 0;
+  }
+  
+  .answer {
+    font-weight: bold;
+    color: #ffda77;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background: #00ffe7;
+    color: #111;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 0 10px #00ffe7, 0 0 30px #00ffe7 inset;
+  }
+  
+  button:hover {
+    background: #111;
+    color: #00ffe7;
+    box-shadow: 0 0 10px #00ffe7, 0 0 20px #00ffe7;
+  }
+  
